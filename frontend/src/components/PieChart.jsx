@@ -28,7 +28,7 @@ export default function PieChart() {
 
   // Define border colors
   const borderColors = [
-    '#FFFFFF', // White border
+    '#FFFFFF', 
     '#FFFFFF',
     '#FFFFFF',
   ];
