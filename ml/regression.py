@@ -1,18 +1,16 @@
-
 def linear_regression(x, y):
-    # Calculate mean of x and y
-    x_mean = sum(x) / len(x)
-    y_mean = sum(y) / len(y)
 
-    # Calculate slope (m) and intercept (c) for y = mx + c
-    numerator = sum((xi - x_mean) * (yi - y_mean) for xi, yi in zip(x, y))
-    denominator = sum((xi - x_mean) ** 2 for xi in x)
-    m = numerator / denominator
-    c = y_mean - m * x_mean
+    n = len(x)
+    x_sum = sum(x)
+    y_sum = sum(y)
+    xy_sum = sum(x_i * y_i for x_i, y_i in zip(x, y))
+    xx_sum = sum(x_i * x_i for x_i in x)
 
-    return m, c
+    # Calculating slope (m) and intercept (b)
+    m = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum**2)
+    b = (y_sum - m * x_sum) / n
 
-def predict_future_expense(x, y, future_period):
-    m, c = linear_regression(x, y)
-    future_x = max(x) + future_period
-    return m * future_x + c
+    next_month = max(x) + 1
+    prediction = max(min(y), m * next_month + b)
+    return prediction
+

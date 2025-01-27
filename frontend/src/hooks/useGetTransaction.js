@@ -3,8 +3,7 @@ import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
 const useGetTransaction = () => {
-
-  const {authUser} = useAuthContext();
+  const { authUser } = useAuthContext();
   const [transaction, setTransaction] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -18,17 +17,19 @@ const useGetTransaction = () => {
         throw new Error(data.error);
       } else {
         setTransaction(data);
-        console.log("Transaction fetched");
+        console.log("Transaction Data:", data); // Debugging: Log the fetched data
       }
     } catch (err) {
       toast.error(err.message);
     }
   };
 
+  // Fetch transactions on component mount
   useEffect(() => {
-    getTransaction(); 
-  }, [transaction]);
+    getTransaction();
+  }, []); // Removed `transaction` from dependencies to avoid infinite re-renders
 
+  // Calculate total income and expense
   useEffect(() => {
     const calculateTotals = () => {
       let income = 0;
@@ -47,10 +48,10 @@ const useGetTransaction = () => {
       setTotalExpense(expense);
     };
 
-    calculateTotals(); 
-  }, [transaction]);
+    calculateTotals();
+  }, [transaction]); // Recalculate totals when `transaction` changes
 
-
+  // Update total balance
   useEffect(() => {
     setTotalBalance(totalIncome - totalExpense);
   }, [totalIncome, totalExpense]);

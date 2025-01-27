@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import useTransaction from '../../hooks/useTransaction';
 import useGetTransaction from '../../hooks/useGetTransaction';
 
-
 const ExpenseCard = () => {
 
-    const {addTransaction} = useTransaction();
-
-    const { transaction, totalExpense, getTransaction } = useGetTransaction(); 
+  const { addTransaction } = useTransaction();
+  const { transaction, totalExpense, getTransaction } = useGetTransaction(); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     amount: '',
     date: '',
     category: '',
-    type : 'expense',
+    type: 'expense',
   });
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -24,7 +22,7 @@ const ExpenseCard = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await addTransaction(formData)
     getTransaction();
@@ -32,13 +30,13 @@ const ExpenseCard = () => {
   };
 
   return (
-    <div className="w-96 mx-auto p-4 bg-white shadow-xl shadow-gray-500 rounded-lg ">
+    <div className="w-96 mx-auto p-4 bg-white shadow-xl shadow-gray-500 rounded-lg">
       <div className="text-center">
         <h2 className="text-2xl font-semibold">Total Expenses</h2>
-        <p className="text-xl font-bold mt-2">${totalExpense}</p> {/* You can dynamically load total expenses here */}
+        <p className="text-xl font-bold mt-2">${totalExpense}</p>
         <button
           onClick={handleOpenModal}
-          className="mt-4 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700"
+          className="mt-4 px-6 py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-700"
         >
           Add Expense
         </button>
@@ -105,14 +103,14 @@ const ExpenseCard = () => {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-700"
+                  className="px-6 py-3 bg-green-500 text-white font-bold rounded-full hover:bg-green-600"
                 >
                   Submit
                 </button>
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-700"
+                  className="px-6 py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-600"
                 >
                   Close
                 </button>

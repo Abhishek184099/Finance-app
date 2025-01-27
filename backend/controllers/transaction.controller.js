@@ -31,21 +31,29 @@ const addTransaction = async(req,res) => {
     }  
 }
 
-const getTransaction = async(req,res) => {
-      try{
-          const userId = req.user._id;
-          let transaction = await Transaction.find({userId : userId});
-          if(!transaction){
-            return res.status(400).json({error: "no transaction found"})
-          }
-
-          return res.status(200).json(transaction);
+const getTransaction = async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const { category } = req.query;
+  
+      let query = { userId: userId };
+      if (category) {
+        query.category = category;
       }
-      catch (err){
-          console.error("error at getTransaction controller :",err.message)
-          return res.status(500).json({error : "Internal server error"});s
+  
+      let transactions = await Transaction.find(query);
+  
+      if (!transactions || transactions.length === 0) {
+        return res.status(400).json({ error: "No transactions found for the given category" });
       }
-}
+  
+      return res.status(200).json(transactions);
+    } catch (err) {
+      console.error("error at getTransaction controller:", err.message);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  };
+  
 
 module.exports = {
     addTransaction,

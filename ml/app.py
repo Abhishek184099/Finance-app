@@ -1,24 +1,44 @@
 from flask import Flask, request, jsonify
-from regression import predict_future_expense
+from pymongo import MongoClient
+from regression import linear_regression  # Importing regression logic
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  
 
-@app.route('/predict', methods=['POST'])
+# MongoDB connection
+client = MongoClient("mongodb://localhost:27017/")
+db = client["finance"] 
+expenses_collection = db["transactions"]  
+
+@app.route('/api/predict', methods=['POST'])
 def predict_expense():
-    data = request.json
-    expenses = data.get("expenses")  # List of past expenses 
-    future_period = data.get("future_period", 1)  # Period to predict (default: next period)
+    try:
+        data = request.json
+        category = data.get('category')
 
-    if not expenses or len(expenses) < 2:
-        return jsonify({"error": "Not enough data points for prediction"}), 400
+        if not category:
+            return jsonify({"error": "Category is required"}), 400
 
-    # Prepare data for regression
-    x = list(range(1, len(expenses) + 1))  # Time periods (1, 2, 3, ...)
-    y = expenses
+        # Fetch past expenses for the specified category
+        expenses = list(expenses_collection.find({"category": category}))
+        print(expenses)
+        
+        if len(expenses) < 2:
+            return jsonify({"error": "Not enough data for prediction"}), 400
 
-    # Get prediction
-    predicted_value = predict_future_expense(x, y, future_period)
-    return jsonify({"predicted_expense": predicted_value})
+        # Prepare data for regression
+        x = list(range(len(expenses)))  # Time points
+        y = [expense['amount'] for expense in expenses]  # Expense amounts
 
-if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+        # Perform linear regression to predict next month's expense
+        predicted_expense = linear_regression(x, y)
+
+        return jsonify({"predicted_expense": predicted_expense}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5001)  

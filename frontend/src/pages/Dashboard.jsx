@@ -5,6 +5,8 @@ import ExpenseCard from '../components/Modal/Addexpense'
 import BalanceCard from '../components/Modal/Totalbalance'
 import Transactiontable from '../components/Transactiontable'
 import Chart from '../components/Chart'
+import PieChart from '../components/PieChart'
+
 
 export default function Dashboard() {
   return (
@@ -15,10 +17,11 @@ export default function Dashboard() {
         <IncomeCard/>
         <ExpenseCard/>
         </div>
-        <div>
+        <div className = "flex gap-4 p-4">
           <Chart/>
+          <PieChart/>
         </div>
-        <div className=''>
+        <div >
         <Transactiontable />
         </div>
        
