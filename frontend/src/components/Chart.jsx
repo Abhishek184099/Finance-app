@@ -6,7 +6,7 @@ ChartJS.register(LineController, LineElement, PointElement, LinearScale, Categor
 
 export default function TransactionChart() {
   const { transaction } = useGetTransaction();
-  const chartRef = useRef(null); // Ref to hold the chart instance
+  const chartRef = useRef(null); 
 
   const incomeTransaction = transaction.filter(t => t.type == "income")
   const sortedTransaction = incomeTransaction.sort((a, b) => new Date(a.date) - new Date(b.date));

@@ -12,6 +12,7 @@ app.use(cookieParser());
 
 app.use("/api/", require("./routes/auth.route"));
 app.use("/api/",require("./routes/transaction.route"))
+app.use("/api",require("./routes/tips.route"))
 
 
 app.listen(process.env.port || 0, () => {

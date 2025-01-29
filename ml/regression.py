@@ -11,6 +11,6 @@ def linear_regression(x, y):
     b = (y_sum - m * x_sum) / n
 
     next_month = max(x) + 1
-    prediction = max(min(y), m * next_month + b)
+    prediction =  m * next_month + b
     return prediction
 

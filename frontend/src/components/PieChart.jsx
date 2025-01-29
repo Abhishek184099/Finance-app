@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, PieController);
 
 export default function PieChart() {
   const { transaction } = useGetTransaction();
-  const chartRef = useRef(null); // Ref to hold the chart instance
+  const chartRef = useRef(null); 
 
   // Filter and process expenses
   const expenses = transaction.filter(t => t.type === "expense");

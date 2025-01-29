@@ -35,7 +35,7 @@ const PredictExpense = () => {
         </h2>
         <p className="text-gray-600 text-center mb-6">
           Unlock the power of linear regression to predict future expenses across different categories. 
-          Whether it's groceries, travel, or utilities, our advanced algorithm analyzes trends to provide 
+          Whether it's food, rent, or entertainment, our advanced algorithm analyzes trends to provide 
           accurate forecasts. Simply enter a category below and let the magic happen!
         </p>
         <div className="space-y-4">
@@ -43,7 +43,7 @@ const PredictExpense = () => {
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="Enter category (e.g., Groceries, Travel)"
+            placeholder="Enter category (e.g., food, rent)"
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button

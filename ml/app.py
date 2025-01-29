@@ -17,14 +17,16 @@ def predict_expense():
         data = request.json
         category = data.get('category')
 
+
+
         if not category:
             return jsonify({"error": "Category is required"}), 400
 
         # Fetch past expenses for the specified category
-        expenses = list(expenses_collection.find({"category": category}))
+        expenses = list(expenses_collection.find({"category": category }))
         print(expenses)
         
-        if len(expenses) < 2:
+        if len(expenses) < 3:
             return jsonify({"error": "Not enough data for prediction"}), 400
 
         # Prepare data for regression
